@@ -107,6 +107,8 @@ class NameResolver extends PhpParserNameResolver implements LoggerAwareInterface
                 $nameContext = $this->getNameContext();
 
                 $docText = str_replace('[]', '', $doc->getText());
+                $docText = str_replace('array-key', 'string|int', $docText);
+                $docText = preg_replace('/array<(?:\s*\S+\s*,)?\s*(\S+)\s*>/m', 'array|$1[]', $docText);
 
                 $docBlock = $this->docBlockFactory->create(
                     $docText,
